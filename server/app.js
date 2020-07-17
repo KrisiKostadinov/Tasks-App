@@ -1,11 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 
+require('dotenv').config();
+require('./config/db');
+
 const app = express();
 
 app.use(cors());
 
-app.use('/', (req, res) => res.json({ info: 'Hello World!' }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use('/users', require('./routes/users'));
 
 const port = process.env.PORT || 3000;
 
