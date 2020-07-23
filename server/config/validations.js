@@ -1,4 +1,4 @@
-const { body, validationResult, check } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 
 const registerValidation = [
     body('email').isEmail().withMessage('Please enter a valid email address!'),
@@ -15,7 +15,7 @@ const registerValidation = [
         if (errors.length > 0) {
             return res.status(422).json(errors);
         }
-            
+        
         next();   
     }
 ];
