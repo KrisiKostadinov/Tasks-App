@@ -16,5 +16,14 @@ module.exports = {
                 res.send(error);
             }
         }
+    },
+
+    get: {
+        async details(req, res) {
+            const { id } = req.params;
+
+            const task = await Task.findById({ _id: id });
+            res.send(task);
+        }
     }
 }
