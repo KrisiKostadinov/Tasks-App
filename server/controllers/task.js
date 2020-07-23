@@ -24,6 +24,11 @@ module.exports = {
 
             const task = await Task.findById({ _id: id });
             res.send(task);
+        },
+
+        async all(req, res) {
+            const tasks = await Task.find();
+            res.send(tasks);
         }
     }
 }
