@@ -35,6 +35,20 @@ const loginValidation = [
     }
 ];
 
+const taskValidator = [
+    body('title').notEmpty().withMessage('The title is required.'),
+    (req, res, next) => {
+        const result = validationResult(req);
+        let errors = readErrors(result);
+        
+        if(errors.length > 0) {
+            return res.status(422).json(errors);
+        }
+        
+        next();
+    }
+];
+
 function readErrors(result) {
     let errors = [];
     result.errors.forEach(error => {
@@ -47,4 +61,5 @@ function readErrors(result) {
 module.exports = {
     registerValidation,
     loginValidation,
+    taskValidator,
 };

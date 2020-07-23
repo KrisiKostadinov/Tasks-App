@@ -1,4 +1,3 @@
-const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -35,12 +34,10 @@ module.exports = {
                         email: user.email,
                     }, 'shhhhh');
                     
-                    res.json(token);
+                    return res.send(token);
                 } else {
                     res.json(['The password is wrong!']);
                 }
-                
-                res.json(user);
             } catch (error) {
                 res.json(error);
             }
