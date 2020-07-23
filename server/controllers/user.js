@@ -1,6 +1,7 @@
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     post: {
@@ -15,15 +16,34 @@ module.exports = {
                     email,
                     passwordHash
                 });
-                
+
                 res.json(result);
             } catch (error) {
                 res.json(error);
             }
         },
         
-        login(req, res) {
-            // TODO
+        async login(req, res) {
+            const { email, password } = req.body;
+
+            try {
+                const user = await User.findOne({ email });
+                const match = await bcrypt.compare(password, user.passwordHash);
+
+                if(match) {
+                    const token = jwt.sign({
+                        email: user.email,
+                    }, 'shhhhh');
+                    
+                    res.json(token);
+                } else {
+                    res.json(['The password is wrong!']);
+                }
+                
+                res.json(user);
+            } catch (error) {
+                res.json(error);
+            }
         }
     }
 }

@@ -3,6 +3,6 @@ const { registerValidation, loginValidation } = require('../config/validations')
 const userController = require('../controllers/user');
 
 router.post('/register', registerValidation, userController.post.register);
-router.post('/login', loginValidation, (req, res) => res.json({ info: 'Hello World!' }));
+router.post('/login', loginValidation, userController.post.login);
 
 module.exports = router;
