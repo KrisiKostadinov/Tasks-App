@@ -30,5 +30,20 @@ module.exports = {
             const tasks = await Task.find();
             res.send(tasks);
         }
+    },
+
+    del: {
+        async dismiss(req, res) {
+            const { id } = req.params;
+
+            try {
+                const task = await Task.findById(id);
+                const deletedTask = await task.remove();
+
+                res.send(deletedTask);
+            } catch (error) {
+                res.send(error);
+            }
+        }
     }
 }
